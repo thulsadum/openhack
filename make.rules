@@ -1,0 +1,7 @@
+# vim: ft=make
+CC=gcc
+CFLAGS=-Wall -g
+LDFLAGS=-lncurses
+
+%.o: %.c
+	$(CC) $(CFLAGS) -c $<
