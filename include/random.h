@@ -15,4 +15,14 @@
  */
 int random(int min, int max);
 
+/**
+ * get an random number
+ * @return int a random number
+ */
+int random();
+
+/**
+ * called for initialising random generator
+ */
+void random_init();
 #endif //RANDOM_H

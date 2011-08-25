@@ -1,6 +1,6 @@
 # vim: ft=make
 CC=gcc
-CFLAGS=-Wall -g
+CFLAGS=-Wall -g -I..
 LDFLAGS=-lncurses
 
 %.o: %.c
