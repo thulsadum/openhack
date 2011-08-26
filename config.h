@@ -7,7 +7,7 @@
  * Feature configuration of openhack
  */
 
-
+#define CFG_COLORS // use colors
 
 
 #endif
