@@ -29,4 +29,16 @@ void ui_suspend();
  */
 //int ui_waitkey();
 
+/**
+ * a printf wrapper for printing strings to windows.
+ * @param fmt const char * containing the format string
+ * @param ... arguments for the format string
+ * @return int number of characters written
+ */
+int ui_wprintf(WINDOW* win, const char * fmt, ...);
+
+// a simple wrapper macro for printing messages to default window
+// (ui_win_messages)
+#define ui_printf(FORMAT, ...) ui_wprintf(ui_win_messages, FORMAT, __VA_ARGS__)
+
 #endif

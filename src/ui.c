@@ -1,3 +1,5 @@
+#include <stdarg.h>
+#include <stdio.h>
 #include "include/ui.h"
 
 void ui_init() {
@@ -42,5 +44,19 @@ void ui_suspend() {
 	delwin(ui_win_messages);
 	echo();
 	nocbreak();
+	clear();
+	refresh();
     endwin();
 }
+
+int ui_wprintf(WINDOW* win, const char *fmt, ...) {
+	va_list fmtargs;
+	char buffer[COLS*LINES];
+
+	va_start(fmtargs, fmt);
+	int ret = vsnprintf(buffer, sizeof(buffer)-1, fmt, fmtargs);	
+	va_end(fmtargs);
+
+	waddstr(win, buffer);
+	return ret;
+} 

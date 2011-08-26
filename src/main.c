@@ -7,10 +7,13 @@ int main(int argc, char** argv)
     random_init();
     ui_init();
 
-	waddstr(ui_win_map, "map");
-	waddstr(ui_win_side, "side");
-	waddstr(ui_win_status, "status");
-	waddstr(ui_win_messages, "messages");
+	ui_wprintf(ui_win_map, "map");
+	ui_wprintf(ui_win_side, "side");
+	ui_wprintf(ui_win_status, "status");
+	ui_wprintf(ui_win_messages, "messages");
+
+	ui_printf("LINES: %d, COLS: %d", LINES, COLS);
+
 	refresh();
 	wrefresh(ui_win_map);
 	wrefresh(ui_win_side);

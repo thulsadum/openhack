@@ -1,21 +1,25 @@
 #ifndef MAP_H
 #define MAP_H
 
+#include <sys/types.h>
+
 #include "room.h"
 
-enum map_type_t {
+enum _map_type_t {
 	MT_DUNGEON,
 	MT_OUTDOOR,
 	MT_STATIC,
 };
 
-
-struct tile_t {
+struct _tile_t {
 	unsigned int properties;
 	const char* character;
 };
 
-tile_t[] map_tiles;
+typedef enum _map_type_t map_type_t;
+typedef struct _tile_t tile_t;
+
+//tile_t[] map_tiles;
 
 #define TILE_FLOOR '.'
 #define TILE_PATH '#'
@@ -44,8 +48,8 @@ struct map_t {
 	map_type_t map_type;
 	int width;
 	int height;
-	tile_t[][] tiles; 
+	tile_t **tiles; 
 	size_t rooms_len;
-	room_t[] rooms;
+	/// @todo room_t *rooms;
 };
 #endif
