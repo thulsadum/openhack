@@ -2,9 +2,10 @@
 #define RANDOM_H
 
 /**
+ * @file random.h
  * @author Sebastian Claus
  * @date 2011-08-24
- * some simple random functions
+ * @brief some simple random functions
  */
 
 /**

@@ -1,5 +1,7 @@
 #include <stdarg.h>
 #include <stdio.h>
+#include <stdlib.h>
+
 #include "include/ui.h"
 
 void ui_init() {
@@ -9,7 +11,7 @@ void ui_init() {
 	cbreak();
 
 #ifdef CFG_COLORS
-	// yeah, wie use colors :D
+	// yeah, we use colors :D
     if(has_colors())start_color();
 	else {
 		addstr("Termninal does not support colors!");
@@ -60,3 +62,28 @@ int ui_wprintf(WINDOW* win, const char *fmt, ...) {
 	waddstr(win, buffer);
 	return ret;
 } 
+
+void ui_print_map(const map_t *map) {
+	int xoff, yoff;
+
+	int x,y;
+
+	for(x=0; x < map->width; x++)
+		for(y=0; y < map->height; y++)
+			waddch(ui_win_map, map->tiles[x][y].character);
+}
+
+win_size_t *ui_win_dim(WINDOW* win) {
+	win_size_t *dim = malloc(sizeof(win_size_t));
+
+	dim->width = win->_maxx - win->_begx;
+	if(dim->width < 0) dim->width = -dim->width;
+
+	dim->height = win->_maxy - win->_begy;
+	if(dim->height < 0) dim->height = -dim->height;
+	
+	dim->x = win->_begx;
+	dim->y = win->_begy;
+
+	return dim;
+}

@@ -8,6 +8,7 @@ openhack: $(OBJS) ../config.h
 
 clean:
 	rm $(OBJS)
+	rm openhack
 
 %.c: ../include/%.h
 

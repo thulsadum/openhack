@@ -5,13 +5,30 @@
 
 #include "config.h"
 
+#include "map.h"
+
 /**
+ * @file ui.h
  * @author Sebastian Claus
  * @date 2011-08-25
- * Header file specifying user interface (UI) functions
+ * @brief specifying user interface (UI) functions
  */
 
 WINDOW *ui_win_map, *ui_win_side, *ui_win_status, *ui_win_messages;
+
+typedef struct _win_size win_size_t; ///< windows size type
+
+/**
+ * structure describing the window dimensions
+ */
+struct _win_size {
+	NCURSES_SIZE_T width; ///< width of the window region
+	NCURSES_SIZE_T height; ///< height of the window region
+	NCURSES_SIZE_T x; ///< x coordinate of the upper-left corner
+	NCURSES_SIZE_T y; ///< y coordinate of the upper-left corner
+};
+
+win_size_t *ui_win_dim(WINDOW* win);
 
 /**
  * initialize the user interface (ui)
@@ -36,6 +53,12 @@ void ui_suspend();
  * @return int number of characters written
  */
 int ui_wprintf(WINDOW* win, const char * fmt, ...);
+
+/**
+ * prints a map onto the screen (in window ui_win_map)
+ * @param map the map structure to be printed out
+ */
+void ui_print_map(const map_t* map);
 
 // a simple wrapper macro for printing messages to default window
 // (ui_win_messages)
