@@ -2,3 +2,4 @@ bin/*
 *.o
 *.swp
 *.log
+src/openhack
