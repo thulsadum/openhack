@@ -70,7 +70,7 @@ void ui_print_map(const map_t *map) {
 
 	for(x=0; x < map->width; x++)
 		for(y=0; y < map->height; y++)
-			waddch(ui_win_map, map->tiles[x][y].character);
+			mvwaddch(ui_win_map, y, x, GETTILE(map,x,y)->character);
 }
 
 win_size_t *ui_win_dim(WINDOW* win) {

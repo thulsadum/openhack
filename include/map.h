@@ -46,18 +46,18 @@ typedef struct _map_t map_t;
 
 #define TILE(T) map_tile_##T
 
-#ifdef MAP_IMPL
-const tile_t map_tile_floor = { TILE_PROP_NORMAL, '.' };
-const tile_t map_tile_hall = { TILE_PROP_NORMAL, '#' };
-const tile_t map_tile_wall_n = { TILE_PROP_UNPASSABLE, '-'};
-const tile_t map_tile_wall_ne = { TILE_PROP_UNPASSABLE, '.'};
-const tile_t map_tile_wall_e = { TILE_PROP_UNPASSABLE, '|'};
-const tile_t map_tile_wall_se = { TILE_PROP_UNPASSABLE, '\''};
-const tile_t map_tile_wall_s = { TILE_PROP_UNPASSABLE, '-'};
-const tile_t map_tile_wall_sw = { TILE_PROP_UNPASSABLE, '\''};
-const tile_t map_tile_wall_w = { TILE_PROP_UNPASSABLE, '|'};
-const tile_t map_tile_wall_nw = { TILE_PROP_UNPASSABLE, '.'};
-#endif
+#define GETTILE(map, x, y) ((map)->tiles[(x)*(map)->width + (y)])
+
+extern const tile_t map_tile_floor;
+extern const tile_t map_tile_hall;
+extern const tile_t map_tile_wall_n;
+extern const tile_t map_tile_wall_ne;
+extern const tile_t map_tile_wall_e;
+extern const tile_t map_tile_wall_se;
+extern const tile_t map_tile_wall_s;
+extern const tile_t map_tile_wall_sw;
+extern const tile_t map_tile_wall_w;
+extern const tile_t map_tile_wall_nw;
 
 /**
  * structure describing a map
@@ -69,6 +69,21 @@ struct _map_t {
 	tile_t **tiles;  ///< tiles of the map array of size width x height
 };
 
-map_t *mktestMap();
+/**
+ * fills a map with a given tile
+ * @param pmap the map to fill
+ * @param ptile the tile which will fill the map
+ */
+void fill_map(map_t *pmap, tile_t *ptile);
+
+void create_testmap(map_t *pmap);
+
+/**
+ * initializes a map
+ * @param width width of the map
+ * @param height height of the map
+ * @return map_t* pointer to the created map structure
+ */
+map_t* mkmap(int width, int height);
 
 #endif
