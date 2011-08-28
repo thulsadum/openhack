@@ -33,6 +33,8 @@ void ui_init() {
 	ui_win_side = newwin(sideh, sidew, 0, mapw);
 	ui_win_status = newwin(statush, statusw, LINES-2, 0);
 	ui_win_messages = newwin(msgh, msgw, maph, 0);
+
+	keypad(ui_win_map, TRUE);
 }
 
 void ui_suspend() {
@@ -80,4 +82,13 @@ win_size_t *ui_win_dim(WINDOW* win) {
 	dim->y = win->_begy;
 
 	return dim;
+}
+
+void ui_loop() {
+	int key;
+	while(ui_isrunning) {
+		key = wgetch(ui_win_map);
+
+		if(key == 'q') ui_isrunning = 0;
+	}
 }

@@ -24,13 +24,15 @@ int main(int argc, char** argv)
 
 	ui_print_map(map);
 
-
 	refresh();
 	wrefresh(ui_win_map);
 	wrefresh(ui_win_side);
 	wrefresh(ui_win_status);
 	wrefresh(ui_win_messages);
-	getch();
+
+	ui_isrunning = 1;
+	ui_loop();
+
 
     ui_suspend();
     printf(":)\n");

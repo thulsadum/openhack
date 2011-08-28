@@ -16,6 +16,8 @@
 
 WINDOW *ui_win_map, *ui_win_side, *ui_win_status, *ui_win_messages;
 
+int ui_isrunning;
+
 typedef struct _win_size win_size_t; ///< windows size type
 
 /**
@@ -34,6 +36,11 @@ win_size_t *ui_win_dim(WINDOW* win);
  * initialize the user interface (ui)
  */
 void ui_init();
+
+/**
+ * the game loop
+ */
+void ui_loop();
 
 /**
  * suspends the ui
