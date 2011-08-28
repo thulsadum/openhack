@@ -19,7 +19,7 @@ int main(int argc, char** argv)
 	ui_wprintf(ui_win_messages, "messages\n%d,%d", dim_messages->width,
 		dim_messages->height);
 
-	map_t *map = mkmap(30, 35);
+	map_t *map = mkmap(80, 35);
 	create_testmap(map);
 
 	ui_print_map(map);

@@ -29,10 +29,6 @@ void ui_init() {
 	int statusw = COLS;
 	int statush = 2;
 
-//	ui_win_map = subwin(stdscr, maph, mapw, 0, 0);
-//	ui_win_side = subwin(stdscr, sideh, sidew, 0, mapw);
-//	ui_win_status = subwin(stdscr, statush, statusw, LINES-2, 0);
-//	ui_win_messages = subwin(stdscr, msgh, msgw, maph, 0);
 	ui_win_map = newwin(maph, mapw, 0, 0);
 	ui_win_side = newwin(sideh, sidew, 0, mapw);
 	ui_win_status = newwin(statush, statusw, LINES-2, 0);
@@ -64,8 +60,6 @@ int ui_wprintf(WINDOW* win, const char *fmt, ...) {
 } 
 
 void ui_print_map(const map_t *map) {
-	int xoff, yoff;
-
 	int x,y;
 
 	for(x=0; x < map->width; x++)

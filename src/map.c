@@ -2,18 +2,21 @@
 #include <string.h>
 
 #include "include/map.h"
+#include "include/ui.h"
+#define __TILE(NAME, ...) const tile_t* NAME = (const tile_t[]) {__VA_ARGS__}
 
-const tile_t map_tile_floor = { TILE_PROP_NORMAL, '.' };
-const tile_t map_tile_hall = { TILE_PROP_NORMAL, '#' };
-const tile_t map_tile_wall_n = { TILE_PROP_UNPASSABLE, '-'};                                                                                  
-const tile_t map_tile_wall_ne = { TILE_PROP_UNPASSABLE, '.'};                                                                                 
-const tile_t map_tile_wall_e = { TILE_PROP_UNPASSABLE, '|'};
-const tile_t map_tile_wall_se = { TILE_PROP_UNPASSABLE, '\''};
-const tile_t map_tile_wall_s = { TILE_PROP_UNPASSABLE, '-'};
-const tile_t map_tile_wall_sw = { TILE_PROP_UNPASSABLE, '\''};
-const tile_t map_tile_wall_w = { TILE_PROP_UNPASSABLE, '|'};
-const tile_t map_tile_wall_nw = { TILE_PROP_UNPASSABLE, '.'};
+__TILE( map_tile_floor, { TILE_PROP_NORMAL, '.' });
+__TILE( map_tile_hall, { TILE_PROP_NORMAL, '#' });
+__TILE( map_tile_wall_n, { TILE_PROP_UNPASSABLE, '-'});
+__TILE( map_tile_wall_ne, { TILE_PROP_UNPASSABLE, '.'});                                                                                 
+__TILE( map_tile_wall_e, { TILE_PROP_UNPASSABLE, '|'});
+__TILE( map_tile_wall_se, { TILE_PROP_UNPASSABLE, '\''});
+__TILE( map_tile_wall_s, { TILE_PROP_UNPASSABLE, '-'});
+__TILE( map_tile_wall_sw, { TILE_PROP_UNPASSABLE, '\''});
+__TILE( map_tile_wall_w, { TILE_PROP_UNPASSABLE, '|'});
+__TILE( map_tile_wall_nw, { TILE_PROP_UNPASSABLE, '.'});
 
+#undef __TILE
 
 void fill_map(map_t *pmap, tile_t *ptile) {
 	if(pmap == NULL) return;
@@ -36,12 +39,11 @@ map_t *mkmap(int width, int height){
 }
 
 void create_testmap(map_t* pmap) {
-	/// @todo there is a bug here
-	/// @bug does not make correct maps if map is not a sqaure...
-	fill_map(pmap, &TILE(hall));
+	pmap->type = MT_STATIC;
+	fill_map(pmap, TILE(hall));
 	int i;
 	for(i=0; i < pmap->width; i++)
-		GETTILE(pmap, i, pmap->height/2) = &TILE(wall_n);
+		GETTILE(pmap, i, pmap->height/2) = TILE(wall_n);
 	for(i=0; i < pmap->height; i++)
-		GETTILE(pmap, pmap->width/2, i) = &TILE(wall_e);
+		GETTILE(pmap, pmap->width/2, i) = TILE(wall_e);
 }

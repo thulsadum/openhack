@@ -15,7 +15,7 @@
 /**
  * enum specifying the type of the map
  */
-enum _map_type_t {
+enum map_type_st {
 	MT_DUNGEON, ///< map is a dungeon
 	MT_OUTDOOR, ///< map is outdoor
 	MT_STATIC, ///< map is a static map
@@ -24,14 +24,14 @@ enum _map_type_t {
 /**
  * struct describing a tile
  */
-struct _tile_t {
+struct tile_st {
 	unsigned int properties; ///< bitmask describing the properties of the map_tile
 	char character; ///< character rendered on the map
 };
 
-typedef enum _map_type_t map_type_t;
-typedef struct _tile_t tile_t;
-typedef struct _map_t map_t;
+typedef enum map_type_st map_type_t; ///< type for map types
+typedef struct tile_st tile_t; ///< type for tiles
+typedef struct map_st map_t; ///< type for maps
 
 #define TILE_PROP_NORMAL 0x0 ///< tile is normal w/o modification
 #define TILE_PROP_STICKY 0x1 ///< tile is sticky => slows down
@@ -46,23 +46,24 @@ typedef struct _map_t map_t;
 
 #define TILE(T) map_tile_##T
 
-#define GETTILE(map, x, y) ((map)->tiles[(x)*(map)->width + (y)])
+#define OFFSET(map, x, y) ((map)->height * (x) + (y))
+#define GETTILE(map, x, y) ((map)->tiles[OFFSET(map,x,y)])
 
-extern const tile_t map_tile_floor;
-extern const tile_t map_tile_hall;
-extern const tile_t map_tile_wall_n;
-extern const tile_t map_tile_wall_ne;
-extern const tile_t map_tile_wall_e;
-extern const tile_t map_tile_wall_se;
-extern const tile_t map_tile_wall_s;
-extern const tile_t map_tile_wall_sw;
-extern const tile_t map_tile_wall_w;
-extern const tile_t map_tile_wall_nw;
+extern const tile_t* map_tile_floor;
+extern const tile_t* map_tile_hall;
+extern const tile_t* map_tile_wall_n;
+extern const tile_t* map_tile_wall_ne;
+extern const tile_t* map_tile_wall_e;
+extern const tile_t* map_tile_wall_se;
+extern const tile_t* map_tile_wall_s;
+extern const tile_t* map_tile_wall_sw;
+extern const tile_t* map_tile_wall_w;
+extern const tile_t* map_tile_wall_nw;
 
 /**
  * structure describing a map
  */
-struct _map_t {
+struct map_st {
 	map_type_t type; ///< type of the map
 	int width; ///< width of the map
 	int height; ///< height of the map
