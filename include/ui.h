@@ -18,12 +18,12 @@ WINDOW *ui_win_map, *ui_win_side, *ui_win_status, *ui_win_messages;
 
 int ui_isrunning;
 
-typedef struct _win_size win_size_t; ///< windows size type
+typedef struct win_size_st win_size_t; ///< windows size type
 
 /**
  * structure describing the window dimensions
  */
-struct _win_size {
+struct win_size_st {
 	NCURSES_SIZE_T width; ///< width of the window region
 	NCURSES_SIZE_T height; ///< height of the window region
 	NCURSES_SIZE_T x; ///< x coordinate of the upper-left corner
