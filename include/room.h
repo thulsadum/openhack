@@ -12,13 +12,13 @@
 /**
  * the room structure
  */
-struct _room_t {
+struct room_st {
 	int width; ///< the width of the room
 	int height; ///< the height of the room
 };
 
 
-typedef struct _room_t room_t; ///< type for abbriative usage
+typedef struct room_st room_t; ///< type for abbriative usage
 
 /** create room structure with given dimension
  * @param width int width of the room

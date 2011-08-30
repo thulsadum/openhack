@@ -16,12 +16,14 @@
 
 WINDOW *ui_win_map, *ui_win_side, *ui_win_status, *ui_win_messages;
 
-typedef struct _win_size win_size_t; ///< windows size type
+int ui_isrunning;
+
+typedef struct win_size_st win_size_t; ///< windows size type
 
 /**
  * structure describing the window dimensions
  */
-struct _win_size {
+struct win_size_st {
 	NCURSES_SIZE_T width; ///< width of the window region
 	NCURSES_SIZE_T height; ///< height of the window region
 	NCURSES_SIZE_T x; ///< x coordinate of the upper-left corner
@@ -34,6 +36,11 @@ win_size_t *ui_win_dim(WINDOW* win);
  * initialize the user interface (ui)
  */
 void ui_init();
+
+/**
+ * the game loop
+ */
+void ui_loop();
 
 /**
  * suspends the ui
