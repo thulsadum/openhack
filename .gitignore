@@ -3,4 +3,5 @@ bin/*
 *.swp
 *.log
 src/openhack
-doc/*
+doc/html/*
+doc/encyclopedia/*.html
