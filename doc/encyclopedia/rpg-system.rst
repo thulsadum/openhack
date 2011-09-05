@@ -23,11 +23,28 @@ Roleplay system
 
 Motivation
 ==========
-.. todo
+As mentioned in the abstract, their are a lot of game systems describing game
+mechanics and in most cases they describe the set and setting of the game. This
+is a real restrictive approach. This game system tries to break this leashes and
+establish a straight forward, easu to use and reusable set of rules, so you can
+do what ever you want with it to create your own world.
+
+Well, this might be a long shot, but you may give it a try. Requests,
+suggestions and contributions are welcome to my `mail address`_
+
+.. _`mail address`: mailto:anthrax2k4@freenet,de
+
 
 Attributes
 ==========
-.. todo
+Their are xx essential attributes.
+
+- Strength
+- Dextery
+- Stamina
+- Wisdom
+- Intelligence
+
 
 Skills
 ======
