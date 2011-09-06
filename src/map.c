@@ -18,6 +18,8 @@ __TILE( map_tile_wall_nw, { TILE_PROP_UNPASSABLE, '.'});
 
 #undef __TILE
 
+map_t* map_current;
+
 void fill_map(map_t *pmap, tile_t *ptile) {
 	if(pmap == NULL) return;
 	int i;

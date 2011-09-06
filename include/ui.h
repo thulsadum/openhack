@@ -6,6 +6,7 @@
 #include "config.h"
 
 #include "map.h"
+#include "mob.h"
 
 /**
  * @file ui.h
@@ -16,7 +17,7 @@
 
 WINDOW *ui_win_map, *ui_win_side, *ui_win_status, *ui_win_messages;
 
-int ui_isrunning;
+extern int ui_isrunning;
 
 typedef struct win_size_st win_size_t; ///< windows size type
 
@@ -43,6 +44,11 @@ void ui_init();
 void ui_loop();
 
 /**
+ * player interaction
+ */
+void ui_player_interaction();
+
+/**
  * suspends the ui
  */
 void ui_suspend();
@@ -66,6 +72,17 @@ int ui_wprintf(WINDOW* win, const char * fmt, ...);
  * @param map the map structure to be printed out
  */
 void ui_print_map(const map_t* map);
+
+/**
+ * quit the game
+ */
+void ui_quit();
+
+/**
+ * renders a mob on the map.
+ * @param mob reference to the mob, which will be rendered.
+ */
+void ui_print_mob(mob_t* mob);
 
 // a simple wrapper macro for printing messages to default window
 // (ui_win_messages)

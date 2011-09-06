@@ -3,6 +3,9 @@
 #include <stdlib.h>
 
 #include "include/ui.h"
+#include "include/player.h"
+
+int ui_isrunning;
 
 void ui_init() {
     initscr();
@@ -87,8 +90,50 @@ win_size_t *ui_win_dim(WINDOW* win) {
 void ui_loop() {
 	int key;
 	while(ui_isrunning) {
-		key = wgetch(ui_win_map);
+		ui_print_map(map_current);
 
-		if(key == 'q') ui_isrunning = 0;
+		ui_print_mob(player);
+
+		refresh();
+		wrefresh(ui_win_map);
+		wrefresh(ui_win_side);
+		wrefresh(ui_win_status);
+		wrefresh(ui_win_messages);
+
+		key = wgetch(ui_win_map);
+		ui_player_interaction(key);
 	}
 }
+
+void ui_player_interaction(int key) {
+	switch(key){
+		case 'q':
+			ui_quit();
+			break;
+		case KEY_LEFT:
+		case 'h':
+			player_move(-1, 0);
+			break;
+		case KEY_RIGHT:
+		case 'l':
+			player_move(1, 0);
+			break;
+		case KEY_UP:
+		case 'k':
+			player_move(0, -1);
+			break;
+		case KEY_DOWN:
+		case 'j':
+			player_move(0, 1);
+			break;
+	}
+}
+
+void ui_quit() {
+	ui_isrunning = 0;
+}
+
+void ui_print_mob(mob_t* mob) {
+	mvwaddch(ui_win_map, mob->y, mob->x, mob->character);
+}
+

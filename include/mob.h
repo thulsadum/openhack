@@ -33,12 +33,20 @@ struct attributes_st {
 struct mob_st {
 	unsigned int properties;
 	char character;
-	attributes_t attributes;
-	logic_fn_t logic_callback;
-	loot_t loots[];
+	int x;
+	int y;
+	//attributes_t attributes;
+	//logic_fn_t logic_callback;
+	//loot_t loots[];
 };
 
-
+/**
+ * moves a mob.
+ * @param mob the mob to move.
+ * @param dx delta x.
+ * @param dy delta y.
+ */
+void mob_move(mob_t* mob, int dx, int dy);
 
 
 #endif //MOB_H_INCLUDED

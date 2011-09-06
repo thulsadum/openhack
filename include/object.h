@@ -15,7 +15,7 @@
 typedef struct object_st object_t; ///< short hand for object_st structures for abbrivative usage
 
 typedef void (*use_fn_t)(object_t*, mob_t*);
-typedef void (*cmobine_fn_t)(object_t*, object_t*);
+typedef void (*combine_fn_t)(object_t*, object_t*);
 
 /**
  * strcuture describing objects
@@ -24,7 +24,7 @@ struct object_st {
 	unsigned int properties; ///< properties of the object
 	char character; ///< character of the object when rendered on the map
 	use_fn_t use; ///< callback if object is useable or NULL otherwise
-	combine_fn_t use; ///< callback if object is cimbineable or NULL otherwise
+	combine_fn_t combine; ///< callback if object is cimbineable or NULL otherwise
 };
 
 extern const object_t objects[]; ///< all avaible objects

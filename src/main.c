@@ -19,16 +19,8 @@ int main(int argc, char** argv)
 	ui_wprintf(ui_win_messages, "messages\n%d,%d", dim_messages->width,
 		dim_messages->height);
 
-	map_t *map = mkmap(80, 35);
-	create_testmap(map);
-
-	ui_print_map(map);
-
-	refresh();
-	wrefresh(ui_win_map);
-	wrefresh(ui_win_side);
-	wrefresh(ui_win_status);
-	wrefresh(ui_win_messages);
+	map_current = mkmap(80, 35);
+	create_testmap(map_current);
 
 	ui_isrunning = 1;
 	ui_loop();

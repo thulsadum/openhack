@@ -60,6 +60,8 @@ extern const tile_t* map_tile_wall_sw;
 extern const tile_t* map_tile_wall_w;
 extern const tile_t* map_tile_wall_nw;
 
+extern map_t* map_current;
+
 /**
  * structure describing a map
  */
