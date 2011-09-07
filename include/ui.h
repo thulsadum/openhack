@@ -86,6 +86,7 @@ void ui_print_mob(mob_t* mob);
 
 // a simple wrapper macro for printing messages to default window
 // (ui_win_messages)
+#define ui_print(MSG) ui_wprintf(ui_win_messages, MSG)
 #define ui_printf(FORMAT, ...) ui_wprintf(ui_win_messages, FORMAT, __VA_ARGS__)
 
 #endif
