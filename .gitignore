@@ -2,6 +2,8 @@ bin/*
 *.o
 *.swp
 *.log
+src/*.d.*
+src/*.d
 src/openhack
 doc/html/*
 doc/encyclopedia/*.html
