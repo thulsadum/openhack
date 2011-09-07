@@ -49,6 +49,7 @@ typedef struct map_st map_t; ///< type for maps
 #define OFFSET(map, x, y) ((map)->height * (x) + (y))
 #define GETTILE(map, x, y) ((map)->tiles[OFFSET(map,x,y)])
 
+extern const tile_t* map_tile_null;
 extern const tile_t* map_tile_floor;
 extern const tile_t* map_tile_hall;
 extern const tile_t* map_tile_wall_n;

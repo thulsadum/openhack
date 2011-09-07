@@ -5,6 +5,7 @@
 #include "include/ui.h"
 #define __TILE(NAME, ...) const tile_t* NAME = (const tile_t[]) {__VA_ARGS__}
 
+__TILE( map_tile_null, { TILE_PROP_NORMAL, ' ' });
 __TILE( map_tile_floor, { TILE_PROP_NORMAL, '.' });
 __TILE( map_tile_hall, { TILE_PROP_NORMAL, '#' });
 __TILE( map_tile_wall_n, { TILE_PROP_UNPASSABLE, '-'});
