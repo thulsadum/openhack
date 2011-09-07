@@ -1,3 +1,4 @@
+INCLUDE=-I..
 include ../make.rules
 SRCS=$(shell ls *.c)
 OBJS=$(SRCS:%.c=%.o)

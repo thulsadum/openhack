@@ -1,7 +1,7 @@
 # vim: ft=make
 CC=gcc
-CPPFLAGS=-E -I..
-CFLAGS=-Wall -g -I..
+CPPFLAGS=-E $(INCLUDE)
+CFLAGS=-Wall -g $(INCLUDE)
 LDFLAGS=-lncurses
 
 %.o: %.c
