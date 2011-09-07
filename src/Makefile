@@ -8,7 +8,8 @@ openhack: $(OBJS) ../config.h
 
 clean:
 	rm $(OBJS)
+	rm $(SRCS:.c=.d)
 	rm openhack
 
-%.c: ../include/%.h
+include $(SRCS:.c=.d)
 

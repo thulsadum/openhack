@@ -1,7 +1,14 @@
 # vim: ft=make
 CC=gcc
+CPPFLAGS=-E -I..
 CFLAGS=-Wall -g -I..
 LDFLAGS=-lncurses
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $<
+
+%.d: %.c
+	@set -e; rm -f $@; \
+	$(CC) -MM $(CPPFLAGS) $< > $@.$$$$; \
+	sed 's,\($*\)\.o[ :]*,\1.o $@ : ,g' <$@.$$$$ > $@; \
+	rm -f $@.$$$$
