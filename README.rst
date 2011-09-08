@@ -18,8 +18,11 @@ listed below:
 	- single player mode
 	- multi player mode support ist planned.
 
+The source
+==========
+
 Directories
-===========
+-----------
 src
 	Sources live here.
 doc
@@ -33,4 +36,30 @@ include
 bin
 	This is the target for the build process. It might not be present afte a
 	clean checkout.
+
+Dependencies
+------------
+
+required
+~~~~~~~~
+	- ncurses >= 5.9
+
+optional
+~~~~~~~~
+	- doxygen >= 1.7.5 for building the documentation
+
+Building
+--------
+Building the source is straight forward. Simply run::
+
+	make
+
+make targets
+~~~~~~~~~~~~
+
+Try::
+
+	make help
+
+for a list of targets.
 
