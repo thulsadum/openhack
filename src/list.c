@@ -2,102 +2,109 @@
 
 #include "include/list.h"
 
-#ifdef CFG_REWIND_LISTS
-#undef list_insert
-#undef list_add
-#undef list_remove
-#endif
-
-list_t *list_create(void *item) {
+list_t *list_create() {
 	list_t *list = malloc(sizeof(list_t));
+	
+	list->first = NULL;
+	list->last = NULL;
 
-	list->value = item;
-	list->prev = NULL;
-	list->next = NULL;
 	return list;
 }
 
 void list_destroy(list_t *list) {
 	if(list == NULL) return;
-	while((list = list_remove(list, 0)) != NULL)
+	while((list = list_remove(list, 0)) != NULL && !list_empty(list))
 		;
 }
 
-list_t *list_goto(list_t* list, int n) {
-	for(;n>0 && list!= NULL; n--)
-		list = list->next;
-	for(;n<0 && list!= NULL; n++)
-		list = list->prev;
-	return list;
-}
-
-list_t *list_insert(list_t *list, int n, void *item) {
-	list = list_goto(list, n);
+node_t *list_goto(list_t* list, int n) {
 	if(list == NULL) return NULL;
 
-	list_t *tmp = malloc(sizeof(list_t));
-	tmp->value = item;
-	
-	list->prev = tmp;
-	tmp->next = list;
+	node_t *node = list->first;
 
-	return list;
-}
-
-list_t *list_add(list_t *list, int n, void *item) {
-	list = list_goto(list, n);
-	if(list == NULL) return NULL;
-
-	list_t *tmp = malloc(sizeof(list_t));
-	tmp->value = item;
-	
-	// ... prev list next
-	// ... prev list tmp next
-	
-	tmp->prev = list;
-	tmp->next = list->next;
-
-	if(list->next != NULL) list->next->prev = tmp;
-	list->next = tmp;
-
-	return tmp;
+	for(;n>0 && node!= NULL; n--)
+		node = node->next;
+	for(;n<0 && node!= NULL; n++)
+		node = node->prev;
+	return node;
 }
 
 list_t *list_remove(list_t *list, int n) {
-	list = list_goto(list, n);
-	if(list == NULL) return NULL;
-	list_t *tmp = list;
+	if(list_empty(list)) return list;
+
+	node_t *node = list_goto(list, n);
+	if(node == NULL) return NULL;
 	
 	// prev list next
 	// prev next
 
-	if(list->next != NULL)
-		list->next->prev = list->prev;
-	if(list->prev != NULL)
-		list->prev->next = list->next;
-	
-	if(list->next != NULL)
-		list = list->next;
+	if(node->next != NULL)
+		node->next->prev = node->prev;
 	else
-		list = list->prev;
+		list->last = node->prev;
 
-	free(tmp);
+	if(node->prev != NULL)
+		node->prev->next = node->next;
+	else
+		list->first = node->next;
+
+	free(node);
 
 	return list;
 }
 
-list_t *list_first(list_t *list) {
+list_t *list_insert_before(list_t *list, node_t *node, void * value) {
 	if(list == NULL) return NULL;
+	if(!list_empty(list) && node == NULL) return NULL;
+	if(list_empty(list) && node != NULL) return NULL;
 
-	while(list->prev != NULL)
-		list = list->prev;
+	node_t *new = malloc(sizeof(node_t));
+	new->value = value;
+
+	if(list_empty(list) ){
+		new->prev = NULL;
+		new->next = NULL;
+		list->first = new;
+		list->last = new;
+	}else{
+		// prev list next
+		// prev new list next
+		new -> next = node;
+		new -> prev = node->prev;
+
+		if(node->prev != NULL) node->prev->next = new;
+		else list-> first = new;
+
+		node->prev = new;
+
+	}
 	return list;
 }
 
-list_t *list_last(list_t *list) {
+list_t *list_insert_after(list_t *list, node_t *node, void * value) {
 	if(list == NULL) return NULL;
+	if(!list_empty(list) && node == NULL) return NULL;
+	if(list_empty(list) && node != NULL) return NULL;
 
-	while(list->next != NULL)
-		list = list->next;
+	node_t *new = malloc(sizeof(node_t));
+	new->value = value;
+
+	if(list_empty(list) ){
+		new->prev = NULL;
+		new->next = NULL;
+		list->first = new;
+		list->last = new;
+	}else{
+		// prev list next
+		// prev list new next
+		new -> prev = node;
+		new -> next = node->next;
+
+		if(node->next != NULL) node->next->prev = new;
+		else list-> last = new;
+
+		node->next = new;
+	}
 	return list;
 }
+
