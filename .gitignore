@@ -1,9 +1,12 @@
 bin/*
 *.o
+*.d
+*.d.*
 *.swp
 *.log
-src/*.d.*
-src/*.d
 src/openhack
 doc/html/*
 doc/encyclopedia/*.html
+test/*
+!test/*.c
+!test/Makefile

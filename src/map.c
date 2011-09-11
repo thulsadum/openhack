@@ -5,7 +5,8 @@
 #include "include/ui.h"
 #define __TILE(NAME, ...) const tile_t* NAME = (const tile_t[]) {__VA_ARGS__}
 
-__TILE( map_tile_null, { TILE_PROP_NORMAL, ' ' });
+__TILE( map_tile_null, { TILE_PROP_UNPASSABLE, ' ' });
+__TILE( map_tile_empty, { TILE_PROP_NORMAL, ' ' });
 __TILE( map_tile_floor, { TILE_PROP_NORMAL, '.' });
 __TILE( map_tile_hall, { TILE_PROP_NORMAL, '#' });
 __TILE( map_tile_wall_n, { TILE_PROP_UNPASSABLE, '-'});
@@ -38,6 +39,11 @@ map_t *mkmap(int width, int height){
 		free(pmap);
 		return NULL;
 	}
+
+
+	pmap->objects = malloc(sizeof(list_t) * width * height);
+	memset(pmap->objects, NULL, sizeof(list_t) * width * height);
+
 	return pmap;
 }
 
@@ -45,8 +51,16 @@ void create_testmap(map_t* pmap) {
 	pmap->type = MT_STATIC;
 	fill_map(pmap, TILE(hall));
 	int i;
-	for(i=0; i < pmap->width; i++)
+	for(i=0; i < pmap->width; i++) {
 		GETTILE(pmap, i, pmap->height/2) = TILE(wall_n);
-	for(i=0; i < pmap->height; i++)
+		if(i == 5 || i == pmap->width - 5){
+			GETTILE(pmap, i, pmap->height/2) = TILE(null);
+		}
+	}
+	for(i=0; i < pmap->height; i++) {
 		GETTILE(pmap, pmap->width/2, i) = TILE(wall_e);
+		if(i == 5 || i == pmap->height - 5){
+			GETTILE(pmap, pmap->width/2, i) = TILE(null);
+		}
+	}
 }

@@ -9,5 +9,6 @@
 
 #define CFG_COLORS // use colors
 
-
+#define CFG_REWIND_LISTS	// CAUTION DO NOT CHANGE! Tweaks if lists are rewinded
+							// after insertion/deletion
 #endif

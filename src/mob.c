@@ -9,12 +9,12 @@ void mob_move(mob_t* mob, int dx, int dy) {
 
 	if(x < 0 || y < 0 || x >= map_current->width || y >= map_current->height) {
 		if(mob == player)
-			ui_print( "Crossing strangers tides?");
+			ui_print( "Crossing strangers tides?\n");
 		return;
 	}
 	if(GETTILE(map_current, x, y)->properties & TILE_PROP_UNPASSABLE) {
 		if(mob == player)
-			ui_print("Hmpf, noway.");
+			ui_print("Hmpf, noway.\n");
 		return;
 	}
 

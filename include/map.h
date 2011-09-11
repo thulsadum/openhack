@@ -3,7 +3,9 @@
 
 #include <sys/types.h>
 
+#include "../config.h"
 #include "room.h"
+#include "list.h"
 
 /**
  * @file map.h
@@ -50,6 +52,7 @@ typedef struct map_st map_t; ///< type for maps
 #define GETTILE(map, x, y) ((map)->tiles[OFFSET(map,x,y)])
 
 extern const tile_t* map_tile_null;
+extern const tile_t* map_tile_empty;
 extern const tile_t* map_tile_floor;
 extern const tile_t* map_tile_hall;
 extern const tile_t* map_tile_wall_n;
@@ -71,6 +74,8 @@ struct map_st {
 	int width; ///< width of the map
 	int height; ///< height of the map
 	tile_t **tiles;  ///< tiles of the map array of size width x height
+	int num_objects;
+	list_t **objects;
 };
 
 /**

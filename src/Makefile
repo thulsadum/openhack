@@ -4,8 +4,10 @@ SRCS=$(shell ls *.c)
 OBJS=$(SRCS:%.c=%.o)
 
 
-openhack: $(OBJS) ../config.h
+openhack: compile
 	$(CC) $(CFLAGS) $(OBJS) $(LDFLAGS) -o openhack
+
+compile: $(OBJS) ../config.h
 
 clean:
 	rm $(OBJS)
