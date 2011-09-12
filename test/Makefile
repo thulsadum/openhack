@@ -8,16 +8,16 @@ test:  $(EXECS) ../config.h
 	@for t in $(EXECS); do echo running test: $$t && ./$$t || break ; done
 
 list: list.o ../src/list.o
-	$(CC) $(CFLAGS) list.o ../src/list.o -o list
+	$(LINK) list.o ../src/list.o -o list
 
 stack: stack.o ../src/list.o ../src/deque.o
-	$(CC) $(CFLAGS) stack.o ../src/list.o ../src/deque.o -o stack
+	$(LINK) $(CFLAGS) stack.o ../src/list.o ../src/deque.o -o stack
 
 queue: queue.o ../src/list.o ../src/deque.o
-	$(CC) $(CFLAGS) queue.o ../src/list.o ../src/deque.o -o queue
+	$(LINK) $(CFLAGS) queue.o ../src/list.o ../src/deque.o -o queue
 
 deque: deque.o ../src/list.o ../src/deque.o
-	$(CC) $(CFLAGS) deque.o ../src/list.o ../src/deque.o -o deque
+	$(LINK) $(CFLAGS) deque.o ../src/list.o ../src/deque.o -o deque
 
 clean:
 	rm *.o

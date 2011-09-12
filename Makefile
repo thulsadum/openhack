@@ -1,14 +1,14 @@
 SRC=src
-openhack: bin compile
+
+export MAKE_QUIET=1
+
+bin/openhack: bin compile
 	@make openhack -C $(SRC)
 	cp $(SRC)/openhack bin/
 
 .PHONY : compile
 compile:
 	@make $@ -C src
-
-content:
-	make -C $(SRC)/content
 
 bin:
 	mkdir bin

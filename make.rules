@@ -1,14 +1,41 @@
 # vim: ft=make
-CC=gcc
-CPPFLAGS=-E $(INCLUDE)
+
+ifeq ($(MAKE_QUIET), 1)
+Q=@
+
+_CC=gcc -c
+_CPP=gcc -E
+_LINK=gcc
+
+CC=@echo CC $@; $(_CC)
+CPP=@echo CPP $@; $(_CPP)
+LINK=@echo LINK $@; $(_LINK)
+DEP=@echo DEP $@; set -e; rm -f $@; \
+    $(_CPP) -MM $(CPPFLAGS) $< > $@.$$$$; \
+    sed 's,\($*\)\.o[ :]*,\1.o $@ : ,g' <$@.$$$$ > $@; \
+    rm -f $@.$$$$
+else
+Q=
+
+_CC=gcc -c
+_CPP=gcc -E
+_LINK=gcc
+
+CC=gcc -c
+CPP=gcc -E
+LINK=gcc
+DEP=set -e; rm -f $@; \
+    $(_CPP) -MM $(CPPFLAGS) $< > $@.$$$$; \
+    sed 's,\($*\)\.o[ :]*,\1.o $@ : ,g' <$@.$$$$ > $@; \
+    rm -f $@.$$$$
+endif
+
+CPPFLAGS=$(INCLUDE)
 CFLAGS=-Wall -g $(INCLUDE)
 LDFLAGS=-lncurses
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c $<
+	$(Q)$(CC) $(CFLAGS) $<
 
 %.d: %.c
-	@set -e; rm -f $@; \
-	$(CC) -MM $(CPPFLAGS) $< > $@.$$$$; \
-	sed 's,\($*\)\.o[ :]*,\1.o $@ : ,g' <$@.$$$$ > $@; \
-	rm -f $@.$$$$
+	$(DEP)
