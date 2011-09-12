@@ -11,13 +11,16 @@ list: list.o ../src/list.o
 	$(LINK) list.o ../src/list.o -o list
 
 stack: stack.o ../src/list.o ../src/deque.o
-	$(LINK) $(CFLAGS) stack.o ../src/list.o ../src/deque.o -o stack
+	$(LINK) $(CFLAGS) $@.o ../src/list.o ../src/deque.o -o $@
 
 queue: queue.o ../src/list.o ../src/deque.o
-	$(LINK) $(CFLAGS) queue.o ../src/list.o ../src/deque.o -o queue
+	$(LINK) $(CFLAGS) $@.o ../src/list.o ../src/deque.o -o $@
 
 deque: deque.o ../src/list.o ../src/deque.o
-	$(LINK) $(CFLAGS) deque.o ../src/list.o ../src/deque.o -o deque
+	$(LINK) $(CFLAGS) $@.o ../src/list.o ../src/deque.o -o $@
+
+prototype: prototype.o ../src/list.o ../src/deque.o
+	$(LINK) $(CFLAGS) $@.o ../src/list.o ../src/deque.o -o $@
 
 clean:
 	rm *.o

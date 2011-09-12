@@ -4,14 +4,23 @@
 
 #include "include/ui.h"
 #include "include/player.h"
+#include "include/queue.h"
 
 int ui_isrunning;
+
+static queue_t *msgQ;
+static int msgPos = 0;
+static int msgCount = 0;
 
 void ui_init() {
     initscr();
 
 	noecho();
 	cbreak();
+
+	msgQ = queue_create();
+
+	ui_printf("ehlo to openhack. :)");
 
 #ifdef CFG_COLORS
 	// yeah, we use colors :D
@@ -72,27 +81,14 @@ void ui_print_map(const map_t *map) {
 			mvwaddch(ui_win_map, y, x, GETTILE(map,x,y)->character);
 }
 
-win_size_t *ui_win_dim(WINDOW* win) {
-	win_size_t *dim = malloc(sizeof(win_size_t));
-
-	dim->width = win->_maxx - win->_begx;
-	if(dim->width < 0) dim->width = -dim->width;
-
-	dim->height = win->_maxy - win->_begy;
-	if(dim->height < 0) dim->height = -dim->height;
-	
-	dim->x = win->_begx;
-	dim->y = win->_begy;
-
-	return dim;
-}
-
 void ui_loop() {
 	int key;
 	while(ui_isrunning) {
 		ui_print_map(map_current);
 
 		ui_print_mob(player);
+
+		ui_show_messages();
 
 		refresh();
 		wrefresh(ui_win_map);
@@ -137,3 +133,46 @@ void ui_print_mob(mob_t* mob) {
 	mvwaddch(ui_win_map, mob->y, mob->x, mob->character);
 }
 
+void ui_printf(const char *fmt, ...) {
+	va_list fmtargs;
+	char *buffer = malloc(sizeof(char)*COLS*LINES);
+
+	va_start(fmtargs, fmt);
+	int ret = vsnprintf(buffer, sizeof(buffer)-1, fmt, fmtargs);	
+	va_end(fmtargs);
+
+	if(ret >= sizeof(buffer-1)) ret = sizeof(buffer)-1;
+	else buffer = realloc(buffer, ret); 
+
+	if(buffer == NULL) return; // and so we send the message to the
+								// write-only-memory
+	addstr(buffer);
+	queue_enqueue(msgQ, buffer);
+	msgCount++;
+
+	int maxy, maxx;
+
+	getmaxyx(ui_win_messages, maxy, maxx);
+
+	if(msgCount > maxy) msgPos++;
+}
+
+void ui_show_messages() {
+	node_t *cur = list_goto(msgQ, msgPos);
+	int i, maxy, maxx;
+
+	char *msg;
+
+	getmaxyx(ui_win_messages, maxy, maxx);
+
+	werase(ui_win_messages);
+
+	for(i=0; cur!=NULL && i < maxy; i++) {
+		msg = cur->value;
+
+		mvwaddstr(ui_win_messages, i, 0, msg);
+
+		cur = cur->next;
+	}
+
+}

@@ -22,18 +22,6 @@ extern int ui_isrunning;
 typedef struct win_size_st win_size_t; ///< windows size type
 
 /**
- * structure describing the window dimensions
- */
-struct win_size_st {
-	NCURSES_SIZE_T width; ///< width of the window region
-	NCURSES_SIZE_T height; ///< height of the window region
-	NCURSES_SIZE_T x; ///< x coordinate of the upper-left corner
-	NCURSES_SIZE_T y; ///< y coordinate of the upper-left corner
-};
-
-win_size_t *ui_win_dim(WINDOW* win);
-
-/**
  * initialize the user interface (ui)
  */
 void ui_init();
@@ -84,9 +72,25 @@ void ui_quit();
  */
 void ui_print_mob(mob_t* mob);
 
+/**
+ * scrolls the message window
+ * @param lines amount of lines to scroll
+ */
+void ui_scroll(int lines);
+
+/**
+ * enques a message to the message buffer
+ * @param msg message to enqueue
+ */
+void ui_printf(const char* fmt, ...);
+
+/**
+ * prints messages from the message queue to the message window
+ */
+void ui_show_messages();
+
 // a simple wrapper macro for printing messages to default window
 // (ui_win_messages)
-#define ui_print(MSG) ui_wprintf(ui_win_messages, MSG)
-#define ui_printf(FORMAT, ...) ui_wprintf(ui_win_messages, FORMAT, __VA_ARGS__)
+#define ui_print(MSG) ui_printf(MSG)
 
 #endif

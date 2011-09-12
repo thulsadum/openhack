@@ -10,3 +10,4 @@ doc/encyclopedia/*.html
 test/*
 !test/*.c
 !test/Makefile
+test/prototype.c
