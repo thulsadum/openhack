@@ -12,7 +12,7 @@ void* stack_top(stack_t *stack) {
 
 void* stack_pop(stack_t* stack) {
 	void* val = stack_top(stack);
-	list_remove(stack, 0);
+	list_remove_node(stack, stack->first);
 	return val;
 }
 

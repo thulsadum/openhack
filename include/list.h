@@ -101,7 +101,15 @@ node_t *list_goto(list_t *plist, int n);
  * @param n index of element to remove
  * @return pointer to the updated list
  */
-list_t *list_remove(list_t *plist, int n);
+//list_t *list_remove(list_t *plist, int n);
+#define list_remove(LIST, N) list_remove_node(LIST, list_goto(LIST, N))
+/**
+ * removes a node from the list
+ * @param plist pointer to the list
+ * @param node pointer to the node
+ * @return the list or NULL on failure
+ */
+list_t *list_remove_node(list_t *plist, node_t* node);
 
 /**
  * inserts an item before a node

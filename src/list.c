@@ -29,10 +29,8 @@ node_t *list_goto(list_t* list, int n) {
 	return node;
 }
 
-list_t *list_remove(list_t *list, int n) {
+list_t *list_remove_node(list_t *list, node_t *node) {
 	if(list_empty(list)) return list;
-
-	node_t *node = list_goto(list, n);
 	if(node == NULL) return NULL;
 	
 	// prev list next
