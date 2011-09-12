@@ -21,7 +21,7 @@ typedef struct node_st node_t;
  * call back function for list_map
  * @param the current node of the map iteration
  */
-typedef void (*list_map_fn_t)(list_t*);
+typedef void (*list_map_fn_t)(node_t*);
 
 /**
  * structure describing a list node
@@ -48,10 +48,8 @@ struct list_st {
  * applies a function to each list element
  * @param list pointer to the list
  * @param callback the function to call
- * @return the manipulated list
- * @todo implement!
  */
-list_t *list_map(list_t *list, list_map_fn_t callback);
+void list_map(list_t *list, list_map_fn_t callback);
 
 
 /**

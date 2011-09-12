@@ -106,3 +106,11 @@ list_t *list_insert_after(list_t *list, node_t *node, void * value) {
 	return list;
 }
 
+void list_map(list_t* list, list_map_fn_t callback){
+	if(list == NULL) return;
+
+	node_t* cur = list->first;
+	for(;cur != NULL; cur = cur->next) {
+		callback(cur);
+	}	
+}
