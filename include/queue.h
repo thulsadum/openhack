@@ -8,9 +8,9 @@
  * @brief implementation of a stack
  */
 
-#include "stack.h"
+#include "deque.h"
 
-typedef list_t queue_t; ///< queues are lists obviously.
+typedef deque_t queue_t; ///< queues are lists obviously.
 
 /**
  * pushes something onto the queue
@@ -19,7 +19,7 @@ typedef list_t queue_t; ///< queues are lists obviously.
  * @return the queue on success or NULL on failure
  */
 //queue_t *queue_push(queue_t *queue, void* item);
-#define queue_enqueue(STACK, ITEM) list_insert_after(STACK, (STACK)->last, ITEM)
+#define queue_enqueue deque_push_back
 
 /**
  * pops the top element from queue
@@ -27,7 +27,7 @@ typedef list_t queue_t; ///< queues are lists obviously.
  * @return the item poped or NULL if queue was empty
  */
 //void *queue_dequeue(queue_t *queue);
-#define queue_dequeue stack_pop
+#define queue_dequeue deque_pop_front
 
 /**
  * gives the top element of the queue
@@ -35,7 +35,7 @@ typedef list_t queue_t; ///< queues are lists obviously.
  * @return pointer to the top element or NULL if queue is empty
  */
 //void* queue_front(queue_t *queue);
-#define queue_front stack_top
+#define queue_front(QUEUE) deque_front(QUEUE)->value
 
 // some aliases
 #define queue_create list_create
