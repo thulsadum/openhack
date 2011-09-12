@@ -2,6 +2,7 @@
 #define LIST_H
 
 /**
+ * @file list.h
  * @author Sebastian Claus
  * @date 2011/09/10
  * @brief defining an ADT list

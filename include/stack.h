@@ -2,6 +2,7 @@
 #define STACK_H
 
 /**
+ * @file stack.h
  * @author Sebastian Claus
  * @date 2011/09/12
  * @brief implementation of a stack
