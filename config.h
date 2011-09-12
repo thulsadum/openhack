@@ -9,6 +9,6 @@
 
 #define CFG_COLORS // use colors
 
-#define CFG_DEBUG_TESTS // debug output from tests
+#undef CFG_DEBUG_TESTS // debug output from tests
 
 #endif

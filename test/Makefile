@@ -4,11 +4,17 @@ SRCS=$(wildcard *.c)
 OBJS=$(SRCS:%.c=%.o)
 EXECS=$(SRCS:%.c=%)
 
-test:  $(EXECS)
-	@for t in $(EXECS); do echo $$t && ./$$t ; done
+test:  $(EXECS) ../config.h
+	@for t in $(EXECS); do echo running test: $$t && ./$$t || break ; done
 
-$(EXECS) : $(OBJS) $(OBJS:%=../src/%) ../config.h
-	$(CC) $(CFLAGS) ../src/$@.o $@.o $(LDFLAGS) -o $@
+list: list.o ../src/list.o
+	$(CC) $(CFLAGS) list.o ../src/list.o -o list
+
+stack: stack.o ../src/list.o ../src/stack.o
+	$(CC) $(CFLAGS) stack.o ../src/list.o ../src/stack.o -o stack
+
+queue: queue.o ../src/list.o ../src/stack.o
+	$(CC) $(CFLAGS) queue.o ../src/list.o ../src/stack.o -o queue
 
 clean:
 	rm *.o
