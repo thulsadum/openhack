@@ -114,3 +114,13 @@ void list_map(list_t* list, list_map_fn_t callback){
 		callback(cur);
 	}	
 }
+
+int list_length(list_t* list) {
+	if(list == NULL) return -1;
+
+	int len = 0;
+	node_t* node;
+	for(node = list->first; node!= NULL; node = node->next)
+		len++;
+	return len;
+}

@@ -126,6 +126,13 @@ list_t *list_insert_before(list_t *plist, node_t *node, void* value);
 list_t *list_insert_after(list_t *plist, node_t *node, void* value);
 
 /**
+ * returns the lendth of a list
+ * @param plist pointer to the list
+ * @return int length of list or -1 if list is a NULL pointer
+ */
+int list_length(list_t *plist);
+
+/**
  * checks whether a list is empty or not/
  * @param LIST pointer to list, to check
  */
