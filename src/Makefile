@@ -14,5 +14,5 @@ clean:
 	rm $(SRCS:.c=.d)
 	rm openhack
 
-include $(SRCS:.c=.d)
+-include $(SRCS:.c=.d)
 

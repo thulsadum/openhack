@@ -21,5 +21,5 @@ clean:
 	rm *.d
 	rm $(EXECS)
 
-include $(SRCS:.c=.d)
+-include $(SRCS:.c=.d)
 
