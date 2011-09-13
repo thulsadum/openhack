@@ -29,10 +29,8 @@ node_t *list_goto(list_t* list, int n) {
 	return node;
 }
 
-list_t *list_remove(list_t *list, int n) {
+list_t *list_remove_node(list_t *list, node_t *node) {
 	if(list_empty(list)) return list;
-
-	node_t *node = list_goto(list, n);
 	if(node == NULL) return NULL;
 	
 	// prev list next
@@ -108,3 +106,21 @@ list_t *list_insert_after(list_t *list, node_t *node, void * value) {
 	return list;
 }
 
+void list_map(list_t* list, list_map_fn_t callback){
+	if(list == NULL) return;
+
+	node_t* cur = list->first;
+	for(;cur != NULL; cur = cur->next) {
+		callback(cur);
+	}	
+}
+
+int list_length(list_t* list) {
+	if(list == NULL) return -1;
+
+	int len = 0;
+	node_t* node;
+	for(node = list->first; node!= NULL; node = node->next)
+		len++;
+	return len;
+}

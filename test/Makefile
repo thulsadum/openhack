@@ -8,18 +8,24 @@ test:  $(EXECS) ../config.h
 	@for t in $(EXECS); do echo running test: $$t && ./$$t || break ; done
 
 list: list.o ../src/list.o
-	$(CC) $(CFLAGS) list.o ../src/list.o -o list
+	$(LINK) list.o ../src/list.o -o list
 
-stack: stack.o ../src/list.o ../src/stack.o
-	$(CC) $(CFLAGS) stack.o ../src/list.o ../src/stack.o -o stack
+stack: stack.o ../src/list.o ../src/deque.o
+	$(LINK) $(CFLAGS) $@.o ../src/list.o ../src/deque.o -o $@
 
-queue: queue.o ../src/list.o ../src/stack.o
-	$(CC) $(CFLAGS) queue.o ../src/list.o ../src/stack.o -o queue
+queue: queue.o ../src/list.o ../src/deque.o
+	$(LINK) $(CFLAGS) $@.o ../src/list.o ../src/deque.o -o $@
+
+deque: deque.o ../src/list.o ../src/deque.o
+	$(LINK) $(CFLAGS) $@.o ../src/list.o ../src/deque.o -o $@
+
+prototype: prototype.o ../src/list.o ../src/deque.o
+	$(LINK) $(CFLAGS) $@.o ../src/list.o ../src/deque.o -o $@
 
 clean:
 	rm *.o
 	rm *.d
 	rm $(EXECS)
 
-include $(SRCS:.c=.d)
+-include $(SRCS:.c=.d)
 

@@ -26,6 +26,7 @@ int main() {
 	for(i = 1; i<7; i++)
 		list = list_add(list, i-1, &iA[i]);
 	assert(list != NULL);
+	assert(list_length(list) == 7);
 
 	dlog("Stage 1.2\n");
 	

@@ -5,7 +5,7 @@ OBJS=$(SRCS:%.c=%.o)
 
 
 openhack: compile
-	$(CC) $(CFLAGS) $(OBJS) $(LDFLAGS) -o openhack
+	$(LINK) $(OBJS) $(LDFLAGS) -o openhack
 
 compile: $(OBJS) ../config.h
 
@@ -14,5 +14,5 @@ clean:
 	rm $(SRCS:.c=.d)
 	rm openhack
 
-include $(SRCS:.c=.d)
+-include $(SRCS:.c=.d)
 
