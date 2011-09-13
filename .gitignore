@@ -9,4 +9,5 @@ doc/html/*
 doc/encyclopedia/*.html
 test/*
 !test/*.c
+!test/*.h
 !test/Makefile
