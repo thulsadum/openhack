@@ -5,6 +5,7 @@ bin/*
 *.swp
 *.log
 src/openhack
+src/*/openhack
 doc/html/*
 doc/encyclopedia/*.html
 test/*
