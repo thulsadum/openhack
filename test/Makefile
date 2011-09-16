@@ -7,20 +7,20 @@ EXECS=$(SRCS:%.c=%)
 test:  $(EXECS) ../config.h
 	@for t in $(EXECS); do echo running test: $$t && ./$$t || break ; done
 
-list: list.o ../src/list.o
-	$(LINK) list.o ../src/list.o -o list
+list: list.o ../src/core/list.o
+	$(LINK) list.o ../src/core/list.o -o list
 
-stack: stack.o ../src/list.o ../src/deque.o
-	$(LINK) $(CFLAGS) $@.o ../src/list.o ../src/deque.o -o $@
+stack: stack.o ../src/core/list.o ../src/core/deque.o
+	$(LINK) $(CFLAGS) $@.o ../src/core/list.o ../src/core/deque.o -o $@
 
-queue: queue.o ../src/list.o ../src/deque.o
-	$(LINK) $(CFLAGS) $@.o ../src/list.o ../src/deque.o -o $@
+queue: queue.o ../src/core/list.o ../src/core/deque.o
+	$(LINK) $(CFLAGS) $@.o ../src/core/list.o ../src/core/deque.o -o $@
 
-deque: deque.o ../src/list.o ../src/deque.o
-	$(LINK) $(CFLAGS) $@.o ../src/list.o ../src/deque.o -o $@
+deque: deque.o ../src/core/list.o ../src/core/deque.o
+	$(LINK) $(CFLAGS) $@.o ../src/core/list.o ../src/core/deque.o -o $@
 
-prototype: prototype.o ../src/list.o ../src/deque.o
-	$(LINK) $(CFLAGS) $@.o ../src/list.o ../src/deque.o -o $@
+prototype: prototype.o ../src/core/list.o ../src/core/deque.o
+	$(LINK) $(CFLAGS) $@.o ../src/core/list.o ../src/core/deque.o -o $@
 
 clean:
 	-rm *.o

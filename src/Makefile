@@ -1,18 +1,10 @@
-INCLUDE=-I..
-include ../make.rules
-SRCS=$(shell ls *.c)
-OBJS=$(SRCS:%.c=%.o)
+.PHONY : content openhack compile clean-core clean-content clean clean-src
+
+openhack compile clean-core:
+	@make $@ -C core
+	
+content clean-content:
+	@make $@ -C content
 
 
-openhack: compile
-	$(LINK) $(OBJS) $(LDFLAGS) -o openhack
-
-compile: $(OBJS) ../config.h
-
-clean:
-	-rm $(SRCS:.c=.d)
-	-rm $(OBJS)
-	-rm openhack
-
--include $(SRCS:.c=.d)
-
+clean clean-src: clean-content clean-core
