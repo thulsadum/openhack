@@ -10,9 +10,9 @@ openhack: compile
 compile: $(OBJS) ../config.h
 
 clean:
-	rm $(OBJS)
-	rm $(SRCS:.c=.d)
-	rm openhack
+	-rm $(SRCS:.c=.d)
+	-rm $(OBJS)
+	-rm openhack
 
 -include $(SRCS:.c=.d)
 

@@ -29,7 +29,7 @@ clean: clean-src
 .PHONY : clean-src
 clean-src:
 	@make clean -C $(SRC)
-	rm bin/openhack
+	-rm bin/openhack
 
 .PHONY : clean-test
 clean-test:

@@ -23,9 +23,9 @@ prototype: prototype.o ../src/list.o ../src/deque.o
 	$(LINK) $(CFLAGS) $@.o ../src/list.o ../src/deque.o -o $@
 
 clean:
-	rm *.o
-	rm *.d
-	rm $(EXECS)
+	-rm *.o
+	-rm *.d
+	-rm $(EXECS)
 
 -include $(SRCS:.c=.d)
 
