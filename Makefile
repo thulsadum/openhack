@@ -20,7 +20,17 @@ doc: Doxyfile src/*.c include/*.h
 test: compile
 	@make test -C test
 
-clean:
+.PHONY : ckean-all
+clean-all: clean-src clean-test
+
+.PHONY : clean
+clean: clean-src
+
+.PHONY : clean-src
+clean-src:
 	@make clean -C $(SRC)
-	@make clean -C test
 	rm bin/openhack
+
+.PHONY : clean-test
+clean-test:
+	@make clean -C test
