@@ -12,6 +12,7 @@ int ui_isrunning;
 static queue_t *msgQ;
 static int msgPos = 0;
 static int msgCount = 0;
+static int win_msg_max_x, win_msg_max_y;
 
 void ui_init() {
     initscr();
@@ -20,18 +21,6 @@ void ui_init() {
 	cbreak();
 
 	msgQ = queue_create();
-
-	ui_printf("ehlo to openhack. :)");
-
-#ifdef CFG_COLORS
-	// yeah, we use colors :D
-    if(has_colors())start_color();
-	else {
-		addstr("Termninal does not support colors!");
-		getch();
-		clear();
-	}
-#endif
 
 	int mapw = (int)((float)COLS/80*60);
 	int maph = (int)((float)LINES/25*20);
@@ -47,7 +36,20 @@ void ui_init() {
 	ui_win_status = newwin(statush, statusw, LINES-2, 0);
 	ui_win_messages = newwin(msgh, msgw, maph, 0);
 
+	getmaxyx(ui_win_messages, win_msg_max_y, win_msg_max_x);
+
 	keypad(ui_win_map, TRUE);
+
+	curs_set(0);
+
+#ifdef CFG_COLORS
+	// yeah, we use colors :D
+    if(has_colors())start_color();
+	else {
+		ui_printf("Termninal does not support colors!");
+	}
+#endif
+	ui_printf("ehlo to openhack. :)");
 }
 
 void ui_suspend() {
@@ -64,7 +66,7 @@ void ui_suspend() {
 
 int ui_wprintf(WINDOW* win, const char *fmt, ...) {
 	va_list fmtargs;
-	char buffer[COLS*LINES];
+	char buffer[CFG_MAX_MSG_LEN];
 
 	va_start(fmtargs, fmt);
 	int ret = vsnprintf(buffer, sizeof(buffer)-1, fmt, fmtargs);	
@@ -87,9 +89,9 @@ void ui_loop() {
 	while(ui_isrunning) {
 		ui_print_map(map_current);
 
-		ui_print_mob(player);
-
 		ui_show_messages();
+
+		ui_print_mob(player);
 
 		refresh();
 		wrefresh(ui_win_map);
@@ -124,10 +126,16 @@ void ui_player_interaction(int key) {
 			player_move(0, 1);
 			break;
 		case KEY_NPAGE:
-			if(msgPos<msgCount)msgPos++;
+			if(msgPos<(msgCount-1))msgPos++;
 			break;
 		case KEY_PPAGE:
 			if(msgPos>0)msgPos--;
+			break;
+		case KEY_HOME:
+			msgPos = 0;
+			break;
+		case KEY_END:
+			if(msgCount > win_msg_max_y) msgPos = msgCount - win_msg_max_y;
 			break;
 	}
 }
