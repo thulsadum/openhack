@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "config.h"
 #include "include/ui.h"
 #include "include/player.h"
 #include "include/queue.h"
@@ -122,6 +123,12 @@ void ui_player_interaction(int key) {
 		case 'j':
 			player_move(0, 1);
 			break;
+		case KEY_NPAGE:
+			if(msgPos<msgCount)msgPos++;
+			break;
+		case KEY_PPAGE:
+			if(msgPos>0)msgPos--;
+			break;
 	}
 }
 
@@ -135,13 +142,16 @@ void ui_print_mob(mob_t* mob) {
 
 void ui_printf(const char *fmt, ...) {
 	va_list fmtargs;
-	char *buffer = malloc(sizeof(char)*COLS*LINES);
+	
+	size_t bufsize = sizeof(char)*CFG_MAX_MSG_LEN;
+	
+	char *buffer = malloc(bufsize);
 
 	va_start(fmtargs, fmt);
-	int ret = vsnprintf(buffer, sizeof(buffer)-1, fmt, fmtargs);	
+	int ret = vsnprintf(buffer, bufsize-1, fmt, fmtargs);	
 	va_end(fmtargs);
 
-	if(ret >= sizeof(buffer-1)) ret = sizeof(buffer)-1;
+	if(ret >= bufsize-1) ret = bufsize-1;
 	else buffer = realloc(buffer, ret); 
 
 	if(buffer == NULL) return; // and so we send the message to the

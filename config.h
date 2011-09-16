@@ -8,6 +8,7 @@
  */
 
 #define CFG_COLORS // use colors
+#define CFG_MAX_MSG_LEN 4096
 
 #undef CFG_DEBUG_TESTS // debug output from tests
 
