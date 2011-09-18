@@ -3,9 +3,11 @@
 
 #include <sys/types.h>
 
-#include "../config.h"
+#include "config.h"
 #include "room.h"
 #include "list.h"
+
+#include "colors.h"
 
 /**
  * @file map.h
@@ -29,6 +31,8 @@ enum map_type_st {
 struct tile_st {
 	unsigned int properties; ///< bitmask describing the properties of the map_tile
 	char character; ///< character rendered on the map
+	IFCOL(int color; ///< color
+	)
 };
 
 typedef enum map_type_st map_type_t; ///< type for map types

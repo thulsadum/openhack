@@ -7,6 +7,8 @@
 #include "include/player.h"
 #include "include/queue.h"
 
+#include "include/colors.h"
+
 int ui_isrunning;
 
 static queue_t *msgQ;
@@ -44,7 +46,10 @@ void ui_init() {
 
 #ifdef CFG_COLORS
 	// yeah, we use colors :D
-    if(has_colors())start_color();
+    if(has_colors()){
+		colors_init();
+		ui_printf("terminal support %d colours and %d pairs.", COLORS, COLOR_PAIRS);
+	}
 	else {
 		ui_printf("Termninal does not support colors!");
 	}
@@ -81,7 +86,15 @@ void ui_print_map(const map_t *map) {
 
 	for(x=0; x < map->width; x++)
 		for(y=0; y < map->height; y++)
+#ifndef CFG_COLORS
 			mvwaddch(ui_win_map, y, x, GETTILE(map,x,y)->character);
+#else
+		{
+			wattron(ui_win_map, COLOR_PAIR(GETTILE(map,x,y)->color));
+			mvwaddch(ui_win_map, y, x, GETTILE(map,x,y)->character);
+			wattroff(ui_win_map, COLOR_PAIR(GETTILE(map,x,y)->color));
+		}
+#endif
 }
 
 void ui_loop() {
@@ -126,7 +139,7 @@ void ui_player_interaction(int key) {
 			player_move(0, 1);
 			break;
 		case KEY_NPAGE:
-			if(msgPos<(msgCount-1))msgPos++;
+			if(msgPos<(msgCount-win_msg_max_y))msgPos++;
 			break;
 		case KEY_PPAGE:
 			if(msgPos>0)msgPos--;
@@ -168,24 +181,18 @@ void ui_printf(const char *fmt, ...) {
 	queue_enqueue(msgQ, buffer);
 	msgCount++;
 
-	int maxy, maxx;
-
-	getmaxyx(ui_win_messages, maxy, maxx);
-
-	if(msgCount > maxy) msgPos++;
+	if(msgCount > win_msg_max_y) msgPos++;
 }
 
 void ui_show_messages() {
 	node_t *cur = list_goto(msgQ, msgPos);
-	int i, maxy, maxx;
+	int i;
 
 	char *msg;
 
-	getmaxyx(ui_win_messages, maxy, maxx);
-
 	werase(ui_win_messages);
 
-	for(i=0; cur!=NULL && i < maxy; i++) {
+	for(i=0; cur!=NULL && i < win_msg_max_y; i++) {
 		msg = cur->value;
 
 		mvwaddstr(ui_win_messages, i, 0, msg);

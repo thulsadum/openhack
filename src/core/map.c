@@ -3,20 +3,21 @@
 
 #include "include/map.h"
 #include "include/ui.h"
+
 #define __TILE(NAME, ...) const tile_t* NAME = (const tile_t[]) {__VA_ARGS__}
 
-__TILE( map_tile_null, { TILE_PROP_UNPASSABLE, ' ' });
-__TILE( map_tile_empty, { TILE_PROP_NORMAL, ' ' });
-__TILE( map_tile_floor, { TILE_PROP_NORMAL, '.' });
-__TILE( map_tile_hall, { TILE_PROP_NORMAL, '#' });
-__TILE( map_tile_wall_n, { TILE_PROP_UNPASSABLE, '-'});
-__TILE( map_tile_wall_ne, { TILE_PROP_UNPASSABLE, '.'});                                                                                 
-__TILE( map_tile_wall_e, { TILE_PROP_UNPASSABLE, '|'});
-__TILE( map_tile_wall_se, { TILE_PROP_UNPASSABLE, '\''});
-__TILE( map_tile_wall_s, { TILE_PROP_UNPASSABLE, '-'});
-__TILE( map_tile_wall_sw, { TILE_PROP_UNPASSABLE, '\''});
-__TILE( map_tile_wall_w, { TILE_PROP_UNPASSABLE, '|'});
-__TILE( map_tile_wall_nw, { TILE_PROP_UNPASSABLE, '.'});
+__TILE( map_tile_null, { TILE_PROP_UNPASSABLE, ' ' IFCOL(,0) });
+__TILE( map_tile_empty, { TILE_PROP_NORMAL, ' ' IFCOL(,0) });
+__TILE( map_tile_floor, { TILE_PROP_NORMAL, '.' IFCOL(,0)});
+__TILE( map_tile_hall, { TILE_PROP_NORMAL, '#'  IFCOL(,COL_GRAY)});
+__TILE( map_tile_wall_n, { TILE_PROP_UNPASSABLE, '-' IFCOL(,COL_RED)});
+__TILE( map_tile_wall_ne, { TILE_PROP_UNPASSABLE, '.' IFCOL(,0)});                                                                                 
+__TILE( map_tile_wall_e, { TILE_PROP_UNPASSABLE, '|' IFCOL(,0)});
+__TILE( map_tile_wall_se, { TILE_PROP_UNPASSABLE, '\'' IFCOL(,0)});
+__TILE( map_tile_wall_s, { TILE_PROP_UNPASSABLE, '-' IFCOL(,0)});
+__TILE( map_tile_wall_sw, { TILE_PROP_UNPASSABLE, '\'' IFCOL(,0)});
+__TILE( map_tile_wall_w, { TILE_PROP_UNPASSABLE, '|' IFCOL(,0)});
+__TILE( map_tile_wall_nw, { TILE_PROP_UNPASSABLE, '.' IFCOL(,0)});
 
 #undef __TILE
 
@@ -54,13 +55,13 @@ void create_testmap(map_t* pmap) {
 	for(i=0; i < pmap->width; i++) {
 		GETTILE(pmap, i, pmap->height/2) = TILE(wall_n);
 		if(i == 5 || i == pmap->width - 5){
-			GETTILE(pmap, i, pmap->height/2) = TILE(null);
+			GETTILE(pmap, i, pmap->height/2) = TILE(empty);
 		}
 	}
 	for(i=0; i < pmap->height; i++) {
 		GETTILE(pmap, pmap->width/2, i) = TILE(wall_e);
 		if(i == 5 || i == pmap->height - 5){
-			GETTILE(pmap, pmap->width/2, i) = TILE(null);
+			GETTILE(pmap, pmap->width/2, i) = TILE(empty);
 		}
 	}
 }
